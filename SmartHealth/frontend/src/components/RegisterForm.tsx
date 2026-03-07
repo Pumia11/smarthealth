@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useAuthStore } from '../stores/authStore';
 import { authAPI } from '../utils/api';
-import { useNavigate } from 'react-router-dom';
 
 export default function RegisterForm() {
   const [email, setEmail] = useState('');
@@ -11,7 +10,6 @@ export default function RegisterForm() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const login = useAuthStore((state) => state.login);
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +32,7 @@ export default function RegisterForm() {
       const loginResponse = await authAPI.login({ email, password });
       const { user, access_token } = loginResponse.data;
       login(user, access_token);
-      navigate('/');
+      window.location.href = '/';
     } catch (err: any) {
       setError(err.response?.data?.error || '注册失败，请稍后重试');
     } finally {
