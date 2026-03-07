@@ -1,11 +1,26 @@
-import sys
-import os
+from flask import Flask, jsonify
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+app = Flask(__name__)
 
-from app import create_app
+@app.route('/')
+def index():
+    return jsonify({
+        'status': 'ok',
+        'message': 'SmartHealth Backend API',
+        'version': '1.0.0'
+    })
 
-app = create_app(os.getenv('FLASK_ENV', 'production'))
+@app.route('/api/health-check')
+def health_check():
+    return jsonify({
+        'status': 'ok',
+        'message': 'SmartHealth API is running!'
+    })
 
-if __name__ == '__main__':
-    app.run()
+@app.route('/api/auth/register', methods=['POST'])
+def register():
+    return jsonify({'message': 'Register endpoint'})
+
+@app.route('/api/auth/login', methods=['POST'])
+def login():
+    return jsonify({'message': 'Login endpoint'})

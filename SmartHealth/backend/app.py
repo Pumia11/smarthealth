@@ -1,6 +1,6 @@
 import os
 import sys
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 
@@ -14,7 +14,7 @@ def create_app(config_name='default'):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
     
-    CORS(app, origins=app.config['CORS_ORIGINS'], supports_credentials=True)
+    CORS(app, origins='*', supports_credentials=True)
     JWTManager(app)
     
     from app.routes.auth import auth_bp
@@ -38,6 +38,14 @@ def create_app(config_name='default'):
     @app.route('/')
     def index():
         return {'status': 'ok', 'message': 'SmartHealth Backend API', 'version': '1.0.0'}
+    
+    @app.errorhandler(500)
+    def internal_error(error):
+        return jsonify({'error': 'Internal server error', 'message': str(error)}), 500
+    
+    @app.errorhandler(404)
+    def not_found(error):
+        return jsonify({'error': 'Not found'}), 404
     
     return app
 
