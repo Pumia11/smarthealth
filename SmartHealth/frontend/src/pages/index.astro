@@ -1,114 +1,179 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/global.css';
 import PixelCard from '../components/PixelCard.astro';
 import PixelButton from '../components/PixelButton.astro';
 import HealthDashboard from '../components/HealthDashboard';
 ---
 
-<BaseLayout title="首页 | SmartHealth">
-  <main class="flex-1 p-6">
-    <div class="max-w-7xl mx-auto">
-      <header class="mb-8">
-        <h1 class="text-3xl font-pixel text-pixel-accent mb-2">
-          SmartHealth
-        </h1>
-        <p class="font-pixel text-pixel-muted">
-          个人健康管理系统 - Pixel Art Edition
-        </p>
-      </header>
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="SmartHealth - Personal Health Management System with Pixel Art Style" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>首页 | SmartHealth</title>
+  </head>
+  <body class="min-h-screen font-pixel overflow-x-hidden">
+    <!-- Animated Background Stars -->
+    <div class="fixed inset-0 w-full h-full overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="absolute top-20 left-20 w-2 h-2 bg-[#ff6b9d] animate-pixel-pulse"></div>
+      <div class="absolute top-40 left-1/4 w-1 h-1 bg-[#4ecdc4] animate-pixel-pulse" style="animation-delay: 0.2s"></div>
+      <div class="absolute top-60 left-1/3 w-1 h-1 bg-[#ffe66d] animate-pixel-pulse" style="animation-delay: 0.4s"></div>
+      <div class="absolute bottom-20 right-20 w-2 h-2 bg-[#a8e6cf] animate-pixel-pulse" style="animation-delay: 0.6s"></div>
+      <div class="absolute bottom-40 right-1/4 w-1 h-1 bg-[#ff6b9d] animate-pixel-pulse" style="animation-delay: 0.8s"></div>
+      <div class="absolute bottom-60 right-1/3 w-1 h-1 bg-[#4ecdc4] animate-pixel-pulse" style="animation-delay: 1s"></div>
+      <div class="absolute top-1/2 left-1/2 w-1 h-1 bg-[#ffe66d] animate-pixel-pulse" style="animation-delay: 1.2s"></div>
+      <div class="absolute top-1/3 right-1/4 w-1 h-1 bg-[#a8e6cf] animate-pixel-pulse" style="animation-delay: 1.4s"></div>
+    </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-2">
-          <PixelCard class="p-6">
-            <h2 class="font-pixel text-xl text-pixel-accent mb-4">
-              健康概览
-            </h2>
-            <HealthDashboard client:load />
-          </PixelCard>
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-[#0f0f23]/95 backdrop-blur-sm border-b-4 border-[#3d3d6b]">
+      <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+        <div class="flex items-center gap-4">
+          <div class="text-3xl animate-pixel-float">❤️</div>
+          <span class="text-xl md:text-2xl text-pixel-gradient font-bold tracking-wider">
+            SMART HEALTH
+          </span>
         </div>
-
-        <div class="space-y-6">
-          <PixelCard class="p-6">
-            <h2 class="font-pixel text-lg text-pixel-accent mb-4">
-              快捷操作
-            </h2>
-            <div class="space-y-3">
-              <PixelButton variant="primary" class="w-full">
-                记录健康指标
-              </PixelButton>
-              <PixelButton variant="accent" class="w-full">
-                添加饮食记录
-              </PixelButton>
-              <PixelButton variant="success" class="w-full">
-                记录运动数据
-              </PixelButton>
-              <PixelButton variant="secondary" class="w-full">
-                AI 健康分析
-              </PixelButton>
-            </div>
-          </PixelCard>
-
-          <PixelCard class="p-6">
-            <h2 class="font-pixel text-lg text-pixel-accent mb-4">
-              今日目标
-            </h2>
-            <div class="space-y-4">
-              <div>
-                <div class="flex justify-between mb-2">
-                  <span class="font-pixel text-sm">热量摄入</span>
-                  <span class="font-pixel text-sm text-pixel-accent">1200/2000</span>
-                </div>
-                <div class="pixel-progress">
-                  <div class="pixel-progress-bar" style="width: 60%"></div>
-                </div>
-              </div>
-              <div>
-                <div class="flex justify-between mb-2">
-                  <span class="font-pixel text-sm">运动消耗</span>
-                  <span class="font-pixel text-sm text-pixel-success">350/500</span>
-                </div>
-                <div class="pixel-progress">
-                  <div class="pixel-progress-bar bg-pixel-success" style="width: 70%"></div>
-                </div>
-              </div>
-              <div>
-                <div class="flex justify-between mb-2">
-                  <span class="font-pixel text-sm">饮水量</span>
-                  <span class="font-pixel text-sm text-pixel-warning">4/8 杯</span>
-                </div>
-                <div class="pixel-progress">
-                  <div class="pixel-progress-bar bg-pixel-warning" style="width: 50%"></div>
-                </div>
-              </div>
-            </div>
-          </PixelCard>
-        </div>
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/" class="text-xs text-[#ccccdc] hover:text-[#ff6b9d] transition-colors px-3 py-2 border-b-2 border-transparent hover:border-[#ff6b9d]">首页</a>
+          <a href="/health" class="text-xs text-[#ccccdc] hover:text-[#ff6b9d] transition-colors px-3 py-2 border-b-2 border-transparent hover:border-[#ff6b9d]">健康</a>
+          <a href="/diet" class="text-xs text-[#ccccdc] hover:text-[#ff6b9d] transition-colors px-3 py-2 border-b-2 border-transparent hover:border-[#ff6b9d]">饮食</a>
+          <a href="/exercise" class="text-xs text-[#ccccdc] hover:text-[#ff6b9d] transition-colors px-3 py-2 border-b-2 border-transparent hover:border-[#ff6b9d]">运动</a>
+          <a href="/ai" class="text-xs text-[#ccccdc] hover:text-[#ff6b9d] transition-colors px-3 py-2 border-b-2 border-transparent hover:border-[#ff6b9d]">AI分析</a>
+        </nav>
+        <a href="/login" class="pixel-btn text-xs py-2">
+          登录
+        </a>
       </div>
+    </header>
 
-      <div class="mt-6">
-        <PixelCard class="p-6">
-          <h2 class="font-pixel text-xl text-pixel-accent mb-4">
-            健康资讯
-          </h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div class="pixel-card p-4 hover:shadow-pixel-lg transition-shadow cursor-pointer">
-              <div class="text-pixel-muted font-pixel text-xs mb-2">营养饮食</div>
-              <h3 class="font-pixel text-sm mb-2">科学饮食搭配指南</h3>
-              <p class="font-pixel text-xs text-pixel-muted">了解如何科学搭配饮食...</p>
+    <!-- Main Content -->
+    <main class="pt-24 pb-12 px-4 md:px-8">
+      <div class="max-w-7xl mx-auto">
+        <!-- Hero Section -->
+        <section class="text-center mb-12">
+          <div class="inline-block mb-6">
+            <div class="text-6xl md:text-8xl mb-4 animate-pixel-float">🎮</div>
+            <h1 class="text-3xl md:text-5xl text-pixel-gradient font-bold leading-tight">
+              SMART HEALTH
+            </h1>
+          </div>
+          <p class="text-sm md:text-base text-[#4ecdc4] uppercase tracking-[0.3em] mb-8">
+            ✨ 个人健康管理系统 ✨
+          </p>
+          <div class="flex flex-wrap justify-center gap-4 mb-8">
+            <span class="pixel-tag pixel-tag-pink">像素风格</span>
+            <span class="pixel-tag pixel-tag-cyan">AI 驱动</span>
+            <span class="pixel-tag pixel-tag-yellow">数据追踪</span>
+          </div>
+        </section>
+
+        <!-- Stats Grid -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
+          <div class="pixel-stat-box pixel-glow-pink">
+            <div class="text-4xl mb-2">❤️</div>
+            <div class="text-2xl md:text-3xl text-[#ff6b9d] font-bold mb-1">85</div>
+            <div class="text-xs text-[#5a5a8a] uppercase tracking-wider">健康评分</div>
+          </div>
+          <div class="pixel-stat-box pixel-glow-cyan">
+            <div class="text-4xl mb-2">🔥</div>
+            <div class="text-2xl md:text-3xl text-[#4ecdc4] font-bold mb-1">1,250</div>
+            <div class="text-xs text-[#5a5a8a] uppercase tracking-wider">消耗热量</div>
+          </div>
+          <div class="pixel-stat-box">
+            <div class="text-4xl mb-2">🍎</div>
+            <div class="text-2xl md:text-3xl text-[#ffe66d] font-bold mb-1">1,800</div>
+            <div class="text-xs text-[#5a5a8a] uppercase tracking-wider">摄入热量</div>
+          </div>
+          <div class="pixel-stat-box">
+            <div class="text-4xl mb-2">🏃</div>
+            <div class="text-2xl md:text-3xl text-[#a8e6cf] font-bold mb-1">45</div>
+            <div class="text-xs text-[#5a5a8a] uppercase tracking-wider">运动分钟</div>
+          </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section class="mb-12">
+          <h2 class="pixel-title text-center mb-8">⚡ 快捷操作</h2>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <a href="/health" class="pixel-box pixel-box-hover p-6 text-center group">
+              <div class="text-4xl mb-3">📊</div>
+              <div class="text-sm text-[#ff6b9d] uppercase tracking-wider">健康指标</div>
+              <div class="text-xs text-[#5a5a8a] mt-2">记录追踪</div>
+            </a>
+            <a href="/diet" class="pixel-box pixel-box-hover p-6 text-center group">
+              <div class="text-4xl mb-3">🍽️</div>
+              <div class="text-sm text-[#4ecdc4] uppercase tracking-wider">饮食管理</div>
+              <div class="text-xs text-[#5a5a8a] mt-2">营养摄入</div>
+            </a>
+            <a href="/exercise" class="pixel-box pixel-box-hover p-6 text-center group">
+              <div class="text-4xl mb-3">💪</div>
+              <div class="text-sm text-[#ffe66d] uppercase tracking-wider">运动记录</div>
+              <div class="text-xs text-[#5a5a8a] mt-2">健身追踪</div>
+            </a>
+            <a href="/ai" class="pixel-box pixel-box-hover p-6 text-center group">
+              <div class="text-4xl mb-3">🤖</div>
+              <div class="text-sm text-[#a8e6cf] uppercase tracking-wider">AI 分析</div>
+              <div class="text-xs text-[#5a5a8a] mt-2">智能建议</div>
+            </a>
+          </div>
+        </section>
+
+        <!-- Today's Progress -->
+        <section class="mb-12">
+          <h2 class="pixel-title text-center mb-8">📈 今日目标</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="pixel-card p-6">
+              <div class="flex justify-between items-center mb-4">
+                <span class="text-sm text-[#ff6b9d] uppercase tracking-wider">热量摄入</span>
+                <span class="text-lg text-[#ff6b9d]">1200 / 2000</span>
+              </div>
+              <div class="pixel-progress">
+                <div class="pixel-progress-bar" style="width: 60%"></div>
+              </div>
+              <div class="text-xs text-[#5a5a8a] mt-3 text-right">kcal</div>
             </div>
-            <div class="pixel-card p-4 hover:shadow-pixel-lg transition-shadow cursor-pointer">
-              <div class="text-pixel-muted font-pixel text-xs mb-2">运动健身</div>
-              <h3 class="font-pixel text-sm mb-2">有氧运动的健康益处</h3>
-              <p class="font-pixel text-xs text-pixel-muted">探索有氧运动对身体的好处...</p>
+            <div class="pixel-card p-6">
+              <div class="flex justify-between items-center mb-4">
+                <span class="text-sm text-[#4ecdc4] uppercase tracking-wider">运动消耗</span>
+                <span class="text-lg text-[#4ecdc4]">350 / 500</span>
+              </div>
+              <div class="pixel-progress">
+                <div class="pixel-progress-bar" style="width: 70%; background: linear-gradient(90deg, #4ecdc4, #2ab7ca);"></div>
+              </div>
+              <div class="text-xs text-[#5a5a8a] mt-3 text-right">kcal</div>
             </div>
-            <div class="pixel-card p-4 hover:shadow-pixel-lg transition-shadow cursor-pointer">
-              <div class="text-pixel-muted font-pixel text-xs mb-2">心理健康</div>
-              <h3 class="font-pixel text-sm mb-2">压力管理技巧</h3>
-              <p class="font-pixel text-xs text-pixel-muted">学习有效的压力管理方法...</p>
+            <div class="pixel-card p-6">
+              <div class="flex justify-between items-center mb-4">
+                <span class="text-sm text-[#ffe66d] uppercase tracking-wider">饮水量</span>
+                <span class="text-lg text-[#ffe66d]">4 / 8 杯</span>
+              </div>
+              <div class="pixel-progress">
+                <div class="pixel-progress-bar" style="width: 50%; background: linear-gradient(90deg, #ffe66d, #f7b731);"></div>
+              </div>
+              <div class="text-xs text-[#5a5a8a] mt-3 text-right">杯</div>
             </div>
           </div>
-        </PixelCard>
+        </section>
+
+        <!-- Health Dashboard -->
+        <section class="mb-12">
+          <h2 class="pixel-title text-center mb-8">📊 如览</h2>
+          <PixelCard class="p-6">
+            <HealthDashboard client:load />
+          </PixelCard>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center py-8 border-t-4 border-[#3d3d6b]">
+          <div class="text-xs text-[#5a5a8a] uppercase tracking-wider">
+            Pixel Art Edition v1.0.0 | Made with ❤️
+          </div>
+        </footer>
       </div>
-    </div>
-  </main>
-</BaseLayout>
+    </main>
+  </body>
+</html>

@@ -1,15 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@font-face {
-  font-family: 'Fusion Pixel';
-  src: url('/fonts/fusion-pixel.woff2') format('woff2'),
-       url('/fonts/fusion-pixel.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
 
 @layer base {
   * {
@@ -20,119 +13,189 @@
 
   html {
     font-family: 'Fusion Pixel', monospace;
-    background-color: theme('colors.pixel.bg');
-    color: theme('colors.pixel.text');
+    background-color: #0f0f23;
+    color: #ccccdc;
+    font-size: 12px;
   }
 
   body {
     @apply antialiased;
     min-height: 100vh;
+    background: 
+      linear-gradient(180deg, #0f0f23 0%, #1a1a3e 50%, #0f0f23 100%);
+    background-attachment: fixed;
   }
 
   ::selection {
-    background-color: theme('colors.pixel.primary');
-    color: theme('colors.pixel.text');
+    background-color: #ff6b9d;
+    color: #0f0f23;
   }
 }
 
 @layer components {
   .pixel-btn {
-    @apply relative px-6 py-3 font-pixel text-pixel-text bg-pixel-primary;
-    @apply border-2 border-pixel-border shadow-pixel;
-    @apply transition-all duration-100 cursor-pointer;
-    @apply hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-pixel-lg;
-    @apply active:translate-x-[2px] active:translate-y-[2px] active:shadow-pixel-sm;
+    @apply relative px-8 py-4 text-sm uppercase tracking-wider;
+    @apply bg-gradient-to-b from-[#ff6b9d] to-[#c44569];
+    @apply text-white border-4 border-[#ff6b9d];
+    @apply shadow-[8px_8px_0px_0px_rgba(0,0,0,0.8)];
+    @apply transition-all duration-75 cursor-pointer;
+    @apply hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,0.8)];
+    @apply active:translate-x-[4px] active:translate-y-[4px] active:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)];
+    @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-x-0 disabled:hover:translate-y-0;
   }
 
   .pixel-btn-secondary {
-    @apply bg-pixel-secondary;
+    @apply bg-gradient-to-b from-[#4ecdc4] to-[#2ab7ca];
+    @apply border-[#4ecdc4];
   }
 
   .pixel-btn-accent {
-    @apply bg-pixel-accent;
+    @apply bg-gradient-to-b from-[#ffe66d] to-[#f7b731];
+    @apply border-[#ffe66d] text-[#0f0f23];
+  }
+
+  .pixel-btn-success {
+    @apply bg-gradient-to-b from-[#a8e6cf] to-[#56ab91];
+    @apply border-[#a8e6cf] text-[#0f0f23];
   }
 
   .pixel-card {
-    @apply bg-pixel-surface border-2 border-pixel-border shadow-pixel;
+    @apply bg-[#1a1a3e] border-4 border-[#3d3d6b];
+    @apply shadow-[8px_8px_0px_0px_rgba(0,0,0,0.8)];
+    @apply relative overflow-hidden;
+  }
+
+  .pixel-card::before {
+    content: '';
+    @apply absolute top-0 left-0 right-0 h-2;
+    background: linear-gradient(90deg, #ff6b9d, #4ecdc4, #ffe66d, #a8e6cf);
   }
 
   .pixel-input {
-    @apply w-full px-4 py-3 font-pixel text-pixel-text bg-pixel-bg;
-    @apply border-2 border-pixel-border shadow-pixel-inset;
-    @apply focus:outline-none focus:border-pixel-accent;
-    @apply placeholder:text-pixel-muted;
+    @apply w-full px-6 py-4 text-xs;
+    @apply bg-[#0f0f23] text-[#ccccdc];
+    @apply border-4 border-[#3d3d6b];
+    @apply shadow-[inset_4px_4px_0px_0px_rgba(0,0,0,0.8)];
+    @apply focus:outline-none focus:border-[#ff6b9d] focus:shadow-[inset_4px_4px_0px_0px_rgba(255, 107, 157, 0.3)];
+    @apply placeholder:text-[#5a5a8a];
+    @apply transition-all duration-150;
   }
 
   .pixel-select {
     @apply pixel-input appearance-none cursor-pointer;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23f4f4f4' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23ff6b9d' d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right 12px center;
+    background-position: right 16px center;
+    background-size: 16px;
   }
 
   .pixel-tag {
-    @apply inline-flex items-center px-3 py-1 font-pixel text-xs;
-    @apply border-2 border-pixel-border bg-pixel-surface;
+    @apply inline-flex items-center px-4 py-2 text-xs uppercase tracking-wider;
+    @apply border-4 bg-[#1a1a3e];
   }
 
-  .pixel-tag-success {
-    @apply bg-pixel-success/20 border-pixel-success text-pixel-success;
+  .pixel-tag-pink {
+    @apply border-[#ff6b9d] text-[#ff6b9d];
   }
 
-  .pixel-tag-warning {
-    @apply bg-pixel-warning/20 border-pixel-warning text-pixel-warning;
+  .pixel-tag-cyan {
+    @apply border-[#4ecdc4] text-[#4ecdc4];
   }
 
-  .pixel-tag-danger {
-    @apply bg-pixel-secondary/20 border-pixel-secondary text-pixel-secondary;
+  .pixel-tag-yellow {
+    @apply border-[#ffe66d] text-[#ffe66d];
+  }
+
+  .pixel-tag-green {
+    @apply border-[#a8e6cf] text-[#a8e6cf];
   }
 
   .pixel-progress {
-    @apply w-full h-4 bg-pixel-bg border-2 border-pixel-border;
+    @apply w-full h-6 bg-[#0f0f23] border-4 border-[#3d3d6b];
+    @apply shadow-[inset_4px_4px_0px_0px_rgba(0,0,0,0.8)];
   }
 
   .pixel-progress-bar {
-    @apply h-full bg-pixel-primary transition-all duration-300;
+    @apply h-full transition-all duration-500;
+    background: linear-gradient(90deg, #ff6b9d, #4ecdc4);
   }
 
   .pixel-divider {
-    @apply border-t-2 border-pixel-border;
+    @apply border-t-4 border-[#3d3d6b];
+    @apply my-6;
   }
 
   .pixel-icon {
-    @apply inline-block w-6 h-6;
+    @apply inline-block w-8 h-8;
     image-rendering: pixelated;
   }
 
-  .pixel-tooltip {
-    @apply absolute px-3 py-2 font-pixel text-sm bg-pixel-surface;
-    @apply border-2 border-pixel-border shadow-pixel;
-    @apply opacity-0 pointer-events-none transition-opacity duration-200;
+  .pixel-title {
+    @apply text-2xl md:text-4xl text-[#ff6b9d] mb-4;
+    text-shadow: 4px 4px 0px #0f0f23, 8px 8px 0px rgba(255, 107, 157, 0.3);
   }
 
-  .pixel-tooltip-trigger:hover .pixel-tooltip {
-    @apply opacity-100;
+  .pixel-subtitle {
+    @apply text-sm md:text-base text-[#4ecdc4] uppercase tracking-widest;
+  }
+
+  .pixel-box {
+    @apply border-4 border-[#3d3d6b] bg-[#1a1a3e];
+    @apply shadow-[8px_8px_0px_0px_rgba(0,0,0,0.8)];
+  }
+
+  .pixel-box-hover {
+    @apply hover:border-[#ff6b9d] hover:shadow-[8px_8px_0px_0px_rgba(255, 107, 157, 0.5)];
+    @apply transition-all duration-150 cursor-pointer;
+  }
+
+  .pixel-glow-pink {
+    box-shadow: 0 0 20px rgba(255, 107, 157, 0.5), 0 0 40px rgba(255, 107, 157, 0.3);
+  }
+
+  .pixel-glow-cyan {
+    box-shadow: 0 0 20px rgba(78, 205, 196, 0.5), 0 0 40px rgba(78, 205, 196, 0.3);
+  }
+
+  .pixel-stat-box {
+    @apply relative p-6 text-center;
+    @apply bg-[#0f0f23] border-4 border-[#3d3d6b];
+    @apply shadow-[8px_8px_0px_0px_rgba(0,0,0,0.8)];
+  }
+
+  .pixel-stat-box::after {
+    content: '';
+    @apply absolute bottom-0 left-0 right-0 h-1;
+    background: linear-gradient(90deg, #ff6b9d, #4ecdc4);
   }
 }
 
 @layer utilities {
   .pixel-border {
     border-style: solid;
-    border-width: 2px;
-    border-color: theme('colors.pixel.border');
-  }
-
-  .pixel-glow {
-    box-shadow: 0 0 0 2px theme('colors.pixel.accent'),
-                4px 4px 0 0 rgba(0, 0, 0, 0.8);
+    border-width: 4px;
+    border-color: #3d3d6b;
   }
 
   .text-shadow-pixel {
-    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+    text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
+  }
+
+  .animate-pixel-bounce {
+    animation: pixel-bounce 0.3s steps(2) infinite;
+  }
+
+  @keyframes pixel-bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
   }
 
   .animate-pixel-pulse {
-    animation: pixel-pulse 1s steps(2) infinite;
+    animation: pixel-pulse 0.5s steps(2) infinite;
   }
 
   @keyframes pixel-pulse {
@@ -140,7 +203,31 @@
       opacity: 1;
     }
     50% {
-      opacity: 0.7;
+      opacity: 0.5;
     }
+  }
+
+  .animate-pixel-float {
+    animation: pixel-float 2s steps(4) infinite;
+  }
+
+  @keyframes pixel-float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-4px);
+    }
+  }
+
+  .bg-pixel-gradient {
+    background: linear-gradient(135deg, #ff6b9d 0%, #c44569 50%, #4ecdc4 100%);
+  }
+
+  .text-pixel-gradient {
+    background: linear-gradient(90deg, #ff6b9d, #4ecdc4, #ffe66d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
