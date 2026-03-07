@@ -8,12 +8,24 @@ export default function RegisterForm() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
   const login = useAuthStore((state) => state.login);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
+
+    if (!username || username.length < 3) {
+      setError('用户名至少需要3个字符');
+      return;
+    }
+
+    if (!email) {
+      setError('请输入邮箱地址');
+      return;
+    }
 
     if (password !== confirmPassword) {
       setError('两次输入的密码不一致');
@@ -28,13 +40,36 @@ export default function RegisterForm() {
     setLoading(true);
 
     try {
-      await authAPI.register({ email, password, username });
-      const loginResponse = await authAPI.login({ email, password });
-      const { user, access_token } = loginResponse.data;
-      login(user, access_token);
-      window.location.href = '/';
+      const registerResponse = await authAPI.register({ email, password, username });
+      
+      if (registerResponse.data.message) {
+        setSuccess('注册成功！正在登录...');
+        
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        const loginResponse = await authAPI.login({ email, password });
+        const { user, access_token } = loginResponse.data;
+        login(user, access_token);
+        
+        setSuccess('登录成功！正在跳转...');
+        
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        window.location.href = '/';
+      }
     } catch (err: any) {
-      setError(err.response?.data?.error || '注册失败，请稍后重试');
+      console.error('Registration error:', err);
+      
+      if (err.code === 'ERR_NETWORK' || err.message === 'Network Error') {
+        setError('无法连接到服务器，请检查网络或稍后重试');
+      } else if (err.response?.status === 400) {
+        setError(err.response?.data?.error || '注册信息有误，请检查后重试');
+      } else if (err.response?.status === 409 || err.response?.status === 422) {
+        setError('该邮箱已被注册，请直接登录');
+      } else if (err.response?.status === 500) {
+        setError('服务器错误，请稍后重试');
+      } else {
+        setError(err.response?.data?.error || '注册失败，请稍后重试');
+      }
     } finally {
       setLoading(false);
     }
@@ -55,6 +90,7 @@ export default function RegisterForm() {
           required
           minLength={3}
           maxLength={20}
+          disabled={loading}
         />
       </div>
 
@@ -69,6 +105,7 @@ export default function RegisterForm() {
           className="w-full px-4 py-3 font-pixel text-pixel-text bg-pixel-bg border-2 border-pixel-border shadow-pixel-inset focus:outline-none focus:border-pixel-accent placeholder:text-pixel-muted"
           placeholder="请输入邮箱"
           required
+          disabled={loading}
         />
       </div>
 
@@ -84,6 +121,7 @@ export default function RegisterForm() {
           placeholder="请输入密码（至少8位）"
           required
           minLength={8}
+          disabled={loading}
         />
       </div>
 
@@ -98,12 +136,19 @@ export default function RegisterForm() {
           className="w-full px-4 py-3 font-pixel text-pixel-text bg-pixel-bg border-2 border-pixel-border shadow-pixel-inset focus:outline-none focus:border-pixel-accent placeholder:text-pixel-muted"
           placeholder="请再次输入密码"
           required
+          disabled={loading}
         />
       </div>
 
       {error && (
-        <div className="p-3 bg-pixel-secondary/20 border-2 border-pixel-secondary font-pixel text-sm text-pixel-secondary">
-          {error}
+        <div className="p-3 bg-red-500/20 border-2 border-red-500 font-pixel text-sm text-red-400">
+          ❌ {error}
+        </div>
+      )}
+
+      {success && (
+        <div className="p-3 bg-green-500/20 border-2 border-green-500 font-pixel text-sm text-green-400">
+          ✅ {success}
         </div>
       )}
 
