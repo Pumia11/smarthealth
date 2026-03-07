@@ -15,7 +15,7 @@ class Config:
     MINIMAX_API_KEY = os.environ.get('MINIMAX_API_KEY')
     MINIMAX_GROUP_ID = os.environ.get('MINIMAX_GROUP_ID')
     
-    CORS_ORIGINS = ['http://localhost:4321', 'http://localhost:3000', 'https://*.vercel.app']
+    CORS_ORIGINS = '*'
 
 class DevelopmentConfig(Config):
     DEBUG = True

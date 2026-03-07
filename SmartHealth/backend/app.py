@@ -1,14 +1,20 @@
 import os
+import sys
 from flask import Flask
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
+
+backend_dir = os.path.dirname(os.path.abspath(__file__))
+if backend_dir not in sys.path:
+    sys.path.insert(0, backend_dir)
+
 from config import config
 
 def create_app(config_name='default'):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
     
-    CORS(app, origins=app.config['CORS_ORIGINS'])
+    CORS(app, origins=app.config['CORS_ORIGINS'], supports_credentials=True)
     JWTManager(app)
     
     from app.routes.auth import auth_bp
@@ -28,6 +34,10 @@ def create_app(config_name='default'):
     @app.route('/api/health-check')
     def health_check():
         return {'status': 'ok', 'message': 'SmartHealth API is running!'}
+    
+    @app.route('/')
+    def index():
+        return {'status': 'ok', 'message': 'SmartHealth Backend API', 'version': '1.0.0'}
     
     return app
 
