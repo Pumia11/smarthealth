@@ -3,8 +3,9 @@ import json
 import requests
 from typing import Dict, Any
 
-DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY')
-DEEPSEEK_API_URL = 'https://api.deepseek.com/v1/chat/completions'
+MINIMAX_API_KEY = os.environ.get('MINIMAX_API_KEY')
+MINIMAX_GROUP_ID = os.environ.get('MINIMAX_GROUP_ID')
+MINIMAX_API_URL = 'https://api.minimax.chat/v1/text/chatcompletion_v2'
 
 def analyze_health(data: Dict[str, Any]) -> Dict[str, Any]:
     prompt = f"""
@@ -51,37 +52,46 @@ def analyze_health(data: Dict[str, Any]) -> Dict[str, Any]:
     }}
     """
     
-    if not DEEPSEEK_API_KEY:
+    if not MINIMAX_API_KEY or not MINIMAX_GROUP_ID:
         return generate_mock_analysis(data)
     
     try:
         headers = {
-            'Authorization': f'Bearer {DEEPSEEK_API_KEY}',
+            'Authorization': f'Bearer {MINIMAX_API_KEY}',
             'Content-Type': 'application/json'
         }
         
         payload = {
-            'model': 'deepseek-chat',
+            'model': 'abab6.5s-chat',
             'messages': [
-                {'role': 'system', 'content': '你是一个专业的健康分析师，擅长分析用户的健康数据并提供个性化建议。'},
+                {'role': 'system', 'content': '你是一个专业的健康分析师，擅长分析用户的健康数据并提供个性化建议。请只返回JSON格式的结果，不要包含其他文字。'},
                 {'role': 'user', 'content': prompt}
             ],
             'temperature': 0.7,
             'max_tokens': 2000
         }
         
-        response = requests.post(DEEPSEEK_API_URL, headers=headers, json=payload, timeout=30)
+        response = requests.post(MINIMAX_API_URL, headers=headers, json=payload, timeout=60)
         
         if response.status_code == 200:
             result = response.json()
             content = result['choices'][0]['message']['content']
-            return json.loads(content)
+            json_str = extract_json(content)
+            return json.loads(json_str)
         else:
+            print(f"MiniMax API error: {response.status_code} - {response.text}")
             return generate_mock_analysis(data)
             
     except Exception as e:
         print(f"AI analysis error: {e}")
         return generate_mock_analysis(data)
+
+def extract_json(content: str) -> str:
+    import re
+    json_match = re.search(r'\{[\s\S]*\}', content)
+    if json_match:
+        return json_match.group()
+    return content
 
 def generate_mock_analysis(data: Dict[str, Any]) -> Dict[str, Any]:
     health_records = data.get('health_records', [])

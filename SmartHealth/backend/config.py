@@ -12,7 +12,8 @@ class Config:
     SUPABASE_DB_URL = os.environ.get('SUPABASE_DB_URL')
     
     OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
-    DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY')
+    MINIMAX_API_KEY = os.environ.get('MINIMAX_API_KEY')
+    MINIMAX_GROUP_ID = os.environ.get('MINIMAX_GROUP_ID')
     
     CORS_ORIGINS = ['http://localhost:4321', 'http://localhost:3000', 'https://*.vercel.app']
 
