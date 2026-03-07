@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from ..services.supabase_client import supabase
+from ..services.supabase_client import get_supabase
 from datetime import datetime
 
 exercise_bp = Blueprint('exercise', __name__)
@@ -12,6 +12,7 @@ def get_exercises():
     search = request.args.get('search')
     
     try:
+        supabase = get_supabase()
         query = supabase.table('exercises').select('''
             *,
             exercise_type:exercise_types(id, name)
@@ -33,6 +34,7 @@ def get_exercises():
 @exercise_bp.route('/exercise-types', methods=['GET'])
 def get_exercise_types():
     try:
+        supabase = get_supabase()
         response = supabase.table('exercise_types').select('*').order('sort').execute()
         return jsonify({
             'types': response.data
@@ -48,6 +50,7 @@ def get_records():
     end_date = request.args.get('end_date')
     
     try:
+        supabase = get_supabase()
         query = supabase.table('exercise_records').select('''
             *,
             exercise:exercises(id, name, mets, cover_image)
@@ -80,6 +83,7 @@ def create_record():
     remark = data.get('remark', '')
     
     try:
+        supabase = get_supabase()
         user_response = supabase.table('user_profiles').select('weight').eq('user_id', user_id).execute()
         weight = user_response.data[0]['weight'] if user_response.data else 65
         
@@ -121,6 +125,7 @@ def get_daily_stats():
     date = request.args.get('date', datetime.utcnow().strftime('%Y-%m-%d'))
     
     try:
+        supabase = get_supabase()
         response = supabase.table('exercise_records').select('''
             duration, calories_burned, exercise:exercises(name)
         ''').eq('user_id', user_id).gte('record_time', f'{date}T00:00:00').lte('record_time', f'{date}T23:59:59').execute()

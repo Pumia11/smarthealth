@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity
-from ..services.supabase_client import supabase
+from ..services.supabase_client import get_supabase
 from ..utils.validators import validate_email, validate_password
 
 auth_bp = Blueprint('auth', __name__)
@@ -23,6 +23,7 @@ def register():
         return jsonify({'error': 'Password must be at least 8 characters'}), 400
     
     try:
+        supabase = get_supabase()
         response = supabase.auth.sign_up({
             'email': email,
             'password': password,
@@ -59,6 +60,7 @@ def login():
         return jsonify({'error': 'Missing email or password'}), 400
     
     try:
+        supabase = get_supabase()
         response = supabase.auth.sign_in_with_password({
             'email': email,
             'password': password
@@ -100,6 +102,7 @@ def get_current_user():
     current_user_id = get_jwt_identity()
     
     try:
+        supabase = get_supabase()
         response = supabase.auth.get_user()
         
         if response.user:
@@ -128,6 +131,7 @@ def update_profile():
     data = request.get_json()
     
     try:
+        supabase = get_supabase()
         response = supabase.auth.update_user({
             'data': data
         })
@@ -151,6 +155,7 @@ def update_profile():
 @jwt_required()
 def logout():
     try:
+        supabase = get_supabase()
         supabase.auth.sign_out()
         return jsonify({'message': 'Logged out successfully'}), 200
     except Exception as e:

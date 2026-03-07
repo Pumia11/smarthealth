@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from ..services.supabase_client import supabase
+from ..services.supabase_client import get_supabase
 from ..services.ai_service import analyze_health
 from datetime import datetime, timedelta
 
@@ -17,6 +17,7 @@ def analyze():
     start_date = end_date - timedelta(days=days)
     
     try:
+        supabase = get_supabase()
         health_records = supabase.table('health_records').select('''
             value, record_time, is_abnormal,
             indicator:health_indicators(name, unit, normal_min, normal_max)
@@ -76,11 +77,12 @@ def analyze():
 @jwt_required()
 def get_reports():
     user_id = get_jwt_identity()
-    page = int(request.args.get('page', 1))
-    limit = int(request.args.get('limit', 10))
+    page = request.args.get('page', 1, type=int)
+    limit = request.args.get('limit', 10, type=int)
     offset = (page - 1) * limit
     
     try:
+        supabase = get_supabase()
         response = supabase.table('health_reports').select('*').eq('user_id', user_id).order('created_at', desc=True).range(offset, offset + limit - 1).execute()
         
         return jsonify({
@@ -97,6 +99,7 @@ def get_report(report_id):
     user_id = get_jwt_identity()
     
     try:
+        supabase = get_supabase()
         response = supabase.table('health_reports').select('*').eq('id', report_id).eq('user_id', user_id).execute()
         
         if not response.data:

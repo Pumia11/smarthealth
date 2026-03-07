@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from ..services.supabase_client import supabase
+from ..services.supabase_client import get_supabase
 from datetime import datetime
 
 article_bp = Blueprint('article', __name__)
@@ -13,6 +13,7 @@ def get_articles():
     offset = (page - 1) * limit
     
     try:
+        supabase = get_supabase()
         query = supabase.table('health_articles').select('*').eq('publish_status', 'published').eq('audit_status', 'approved')
         
         if article_type:
@@ -31,6 +32,7 @@ def get_articles():
 @article_bp.route('/articles/<article_id>', methods=['GET'])
 def get_article(article_id):
     try:
+        supabase = get_supabase()
         response = supabase.table('health_articles').select('*').eq('id', article_id).execute()
         
         if not response.data:
@@ -64,6 +66,7 @@ def create_article():
     }
     
     try:
+        supabase = get_supabase()
         response = supabase.table('health_articles').insert(article_data).execute()
         return jsonify({
             'message': 'Article created successfully',
@@ -75,6 +78,7 @@ def create_article():
 @article_bp.route('/types', methods=['GET'])
 def get_article_types():
     try:
+        supabase = get_supabase()
         response = supabase.table('article_types').select('*').order('sort').execute()
         return jsonify({
             'types': response.data

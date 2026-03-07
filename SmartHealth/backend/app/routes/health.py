@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from ..services.supabase_client import supabase
+from ..services.supabase_client import get_supabase
 from datetime import datetime
 
 health_bp = Blueprint('health', __name__)
@@ -11,10 +11,11 @@ def get_indicators():
     user_id = get_jwt_identity()
     
     try:
+        supabase = get_supabase()
         response = supabase.table('health_indicators').select('''
             *,
             indicator_type:health_indicator_types(id, name)
-        ''').or_(f'belong_user_id.eq.{user_id},is_common.eq.true').execute()
+        ''').or_(f'belong_user_id.is.null,belong_user_id.eq.{user_id}').eq('status', True).order('sort').execute()
         
         return jsonify({
             'indicators': response.data
@@ -41,6 +42,7 @@ def create_indicator():
     }
     
     try:
+        supabase = get_supabase()
         response = supabase.table('health_indicators').insert(indicator_data).execute()
         return jsonify({
             'message': 'Indicator created successfully',
@@ -58,6 +60,7 @@ def get_records():
     end_date = request.args.get('end_date')
     
     try:
+        supabase = get_supabase()
         query = supabase.table('health_records').select('''
             *,
             indicator:health_indicators(id, name, unit)
@@ -90,6 +93,7 @@ def create_record():
     remark = data.get('remark', '')
     
     try:
+        supabase = get_supabase()
         indicator_response = supabase.table('health_indicators').select('normal_min, normal_max').eq('id', indicator_id).execute()
         
         is_abnormal = False
@@ -125,6 +129,7 @@ def get_stats():
     user_id = get_jwt_identity()
     
     try:
+        supabase = get_supabase()
         records_response = supabase.table('health_records').select('''
             *,
             indicator:health_indicators(id, name, unit)

@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from ..services.supabase_client import supabase
+from ..services.supabase_client import get_supabase
 from datetime import datetime
 
 diet_bp = Blueprint('diet', __name__)
@@ -12,6 +12,7 @@ def get_foods():
     search = request.args.get('search')
     
     try:
+        supabase = get_supabase()
         query = supabase.table('foods').select('''
             *,
             food_type:food_types(id, name)
@@ -33,6 +34,7 @@ def get_foods():
 @diet_bp.route('/food-types', methods=['GET'])
 def get_food_types():
     try:
+        supabase = get_supabase()
         response = supabase.table('food_types').select('*').order('sort').execute()
         return jsonify({
             'types': response.data
@@ -49,6 +51,7 @@ def get_records():
     meal_type = request.args.get('meal_type')
     
     try:
+        supabase = get_supabase()
         query = supabase.table('diet_records').select('''
             *,
             food:foods(id, name, calories, protein, carbohydrates, fat)
@@ -82,6 +85,7 @@ def create_record():
     remark = data.get('remark', '')
     
     try:
+        supabase = get_supabase()
         food_response = supabase.table('foods').select('*').eq('id', food_id).execute()
         
         if not food_response.data:
@@ -120,6 +124,7 @@ def get_daily_stats():
     date = request.args.get('date', datetime.utcnow().strftime('%Y-%m-%d'))
     
     try:
+        supabase = get_supabase()
         response = supabase.table('diet_records').select('''
             total_calories, total_protein, total_carbs, total_fat, meal_type
         ''').eq('user_id', user_id).gte('record_time', f'{date}T00:00:00').lte('record_time', f'{date}T23:59:59').execute()
