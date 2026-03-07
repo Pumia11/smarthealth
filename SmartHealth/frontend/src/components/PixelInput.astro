@@ -1,0 +1,54 @@
+---
+export interface Props {
+  type?: 'text' | 'email' | 'password' | 'number' | 'date' | 'time';
+  name: string;
+  label?: string;
+  placeholder?: string;
+  value?: string;
+  required?: boolean;
+  disabled?: boolean;
+  error?: string;
+  class?: string;
+}
+
+const {
+  type = 'text',
+  name,
+  label,
+  placeholder,
+  value = '',
+  required = false,
+  disabled = false,
+  error,
+  class: className = '',
+} = Astro.props;
+---
+
+<div class:list={['flex flex-col gap-2', className]}>
+  {label && (
+    <label for={name} class="font-pixel text-sm text-pixel-text">
+      {label}
+      {required && <span class="text-pixel-secondary ml-1">*</span>}
+    </label>
+  )}
+  <input
+    type={type}
+    id={name}
+    name={name}
+    value={value}
+    placeholder={placeholder}
+    required={required}
+    disabled={disabled}
+    class:list={[
+      'w-full px-4 py-3 font-pixel text-pixel-text bg-pixel-bg',
+      'border-2 border-pixel-border shadow-pixel-inset',
+      'focus:outline-none focus:border-pixel-accent',
+      'placeholder:text-pixel-muted',
+      'disabled:opacity-50 disabled:cursor-not-allowed',
+      error ? 'border-pixel-secondary' : '',
+    ]}
+  />
+  {error && (
+    <span class="font-pixel text-xs text-pixel-secondary">{error}</span>
+  )}
+</div>

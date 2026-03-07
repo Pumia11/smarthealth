@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PixelCard from '../components/PixelCard.astro';
+import HealthRecords from '../components/HealthRecords';
+---
+
+<BaseLayout title="健康指标 | SmartHealth">
+  <main class="flex-1 p-6">
+    <div class="max-w-7xl mx-auto">
+      <header class="mb-8">
+        <h1 class="text-3xl font-pixel text-pixel-accent mb-2">
+          健康指标
+        </h1>
+        <p class="font-pixel text-pixel-muted">
+          记录和追踪您的健康数据
+        </p>
+      </header>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2">
+          <PixelCard class="p-6">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="font-pixel text-xl text-pixel-accent">
+                健康记录
+              </h2>
+              <button class="pixel-btn">
+                + 添加记录
+              </button>
+            </div>
+            <HealthRecords client:load />
+          </PixelCard>
+        </div>
+
+        <div class="space-y-6">
+          <PixelCard class="p-6">
+            <h2 class="font-pixel text-lg text-pixel-accent mb-4">
+              指标分类
+            </h2>
+            <div class="space-y-2">
+              <div class="p-3 bg-pixel-bg border-2 border-pixel-border cursor-pointer hover:border-pixel-accent transition-colors">
+                <span class="text-xl mr-2">🩸</span>
+                <span class="font-pixel text-sm">血糖指标</span>
+              </div>
+              <div class="p-3 bg-pixel-bg border-2 border-pixel-border cursor-pointer hover:border-pixel-accent transition-colors">
+                <span class="text-xl mr-2">📏</span>
+                <span class="font-pixel text-sm">基础体征</span>
+              </div>
+              <div class="p-3 bg-pixel-bg border-2 border-pixel-border cursor-pointer hover:border-pixel-accent transition-colors">
+                <span class="text-xl mr-2">❤️</span>
+                <span class="font-pixel text-sm">血压指标</span>
+              </div>
+              <div class="p-3 bg-pixel-bg border-2 border-pixel-border cursor-pointer hover:border-pixel-accent transition-colors">
+                <span class="text-xl mr-2">💓</span>
+                <span class="font-pixel text-sm">心率指标</span>
+              </div>
+              <div class="p-3 bg-pixel-bg border-2 border-pixel-border cursor-pointer hover:border-pixel-accent transition-colors">
+                <span class="text-xl mr-2">🌡️</span>
+                <span class="font-pixel text-sm">体温指标</span>
+              </div>
+            </div>
+          </PixelCard>
+
+          <PixelCard class="p-6">
+            <h2 class="font-pixel text-lg text-pixel-accent mb-4">
+              数据趋势
+            </h2>
+            <div class="text-center py-8">
+              <p class="font-pixel text-pixel-muted text-sm">
+                选择指标查看趋势图
+              </p>
+            </div>
+          </PixelCard>
+        </div>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

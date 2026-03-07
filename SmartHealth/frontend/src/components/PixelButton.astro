@@ -1,0 +1,57 @@
+---
+export interface Props {
+  variant?: 'primary' | 'secondary' | 'accent' | 'success' | 'warning';
+  size?: 'sm' | 'md' | 'lg';
+  disabled?: boolean;
+  loading?: boolean;
+  class?: string;
+  type?: 'button' | 'submit' | 'reset';
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  disabled = false,
+  loading = false,
+  class: className = '',
+  type = 'button'
+} = Astro.props;
+
+const variantClasses = {
+  primary: 'bg-pixel-primary hover:bg-pixel-primary/80',
+  secondary: 'bg-pixel-secondary hover:bg-pixel-secondary/80',
+  accent: 'bg-pixel-accent hover:bg-pixel-accent/80',
+  success: 'bg-pixel-success hover:bg-pixel-success/80',
+  warning: 'bg-pixel-warning hover:bg-pixel-warning/80 text-pixel-bg',
+};
+
+const sizeClasses = {
+  sm: 'px-3 py-1.5 text-sm',
+  md: 'px-6 py-3 text-base',
+  lg: 'px-8 py-4 text-lg',
+};
+---
+
+<button
+  type={type}
+  disabled={disabled || loading}
+  class:list={[
+    'relative font-pixel text-pixel-text border-2 border-pixel-border shadow-pixel',
+    'transition-all duration-100 cursor-pointer',
+    'hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-pixel-lg',
+    'active:translate-x-[2px] active:translate-y-[2px] active:shadow-pixel-sm',
+    'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-x-0 disabled:hover:translate-y-0 disabled:hover:shadow-pixel',
+    variantClasses[variant],
+    sizeClasses[size],
+    className,
+  ]}
+>
+  {loading ? (
+    <span class="flex items-center gap-2">
+      <span class="animate-pixel-pulse">●</span>
+      <span>加载中...</span>
+    </span>
+  ) : (
+    <slot />
+  )}
+</button>

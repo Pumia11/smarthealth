@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PixelCard from '../components/PixelCard.astro';
+import PixelInput from '../components/PixelInput.astro';
+import PixelButton from '../components/PixelButton.astro';
+import LoginForm from '../components/LoginForm';
+---
+
+<BaseLayout title="登录 | SmartHealth">
+  <main class="flex-1 flex items-center justify-center p-6">
+    <div class="w-full max-w-md">
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-pixel text-pixel-accent mb-4">
+          SmartHealth
+        </h1>
+        <p class="font-pixel text-pixel-muted">
+          个人健康管理系统
+        </p>
+      </div>
+
+      <PixelCard class="p-8">
+        <h2 class="font-pixel text-xl text-pixel-accent mb-6 text-center">
+          登录账号
+        </h2>
+        
+        <LoginForm client:load />
+
+        <div class="mt-6 text-center">
+          <p class="font-pixel text-sm text-pixel-muted">
+            还没有账号？
+            <a href="/register" class="text-pixel-accent hover:underline">
+              立即注册
+            </a>
+          </p>
+        </div>
+
+        <div class="mt-4 text-center">
+          <a href="/forgot-password" class="font-pixel text-sm text-pixel-muted hover:text-pixel-accent">
+            忘记密码？
+          </a>
+        </div>
+      </PixelCard>
+
+      <div class="mt-6 text-center">
+        <p class="font-pixel text-xs text-pixel-muted">
+          Pixel Art Edition v1.0.0
+        </p>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

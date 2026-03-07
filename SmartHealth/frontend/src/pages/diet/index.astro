@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PixelCard from '../../components/PixelCard.astro';
+import DietRecords from '../../components/DietRecords';
+---
+
+<BaseLayout title="饮食管理 | SmartHealth">
+  <main class="flex-1 p-6">
+    <div class="max-w-7xl mx-auto">
+      <header class="mb-8">
+        <h1 class="text-3xl font-pixel text-pixel-accent mb-2">
+          饮食管理
+        </h1>
+        <p class="font-pixel text-pixel-muted">
+          记录您的饮食，管理营养摄入
+        </p>
+      </header>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 space-y-6">
+          <PixelCard class="p-6">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="font-pixel text-xl text-pixel-accent">
+                今日饮食
+              </h2>
+              <button class="pixel-btn">
+                + 添加饮食
+              </button>
+            </div>
+            <DietRecords client:load />
+          </PixelCard>
+        </div>
+
+        <div class="space-y-6">
+          <PixelCard class="p-6">
+            <h2 class="font-pixel text-lg text-pixel-accent mb-4">
+              今日营养摄入
+            </h2>
+            <div class="space-y-4">
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="font-pixel text-sm">热量</span>
+                  <span class="font-pixel text-sm text-pixel-accent">1200/2000 kcal</span>
+                </div>
+                <div class="pixel-progress">
+                  <div class="pixel-progress-bar" style="width: 60%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="font-pixel text-sm">蛋白质</span>
+                  <span class="font-pixel text-sm text-pixel-success">45/60 g</span>
+                </div>
+                <div class="pixel-progress">
+                  <div class="pixel-progress-bar bg-pixel-success" style="width: 75%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="font-pixel text-sm">碳水化合物</span>
+                  <span class="font-pixel text-sm text-pixel-warning">150/250 g</span>
+                </div>
+                <div class="pixel-progress">
+                  <div class="pixel-progress-bar bg-pixel-warning" style="width: 60%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="font-pixel text-sm">脂肪</span>
+                  <span class="font-pixel text-sm text-pixel-secondary">40/65 g</span>
+                </div>
+                <div class="pixel-progress">
+                  <div class="pixel-progress-bar bg-pixel-secondary" style="width: 62%"></div>
+                </div>
+              </div>
+            </div>
+          </PixelCard>
+
+          <PixelCard class="p-6">
+            <h2 class="font-pixel text-lg text-pixel-accent mb-4">
+              餐次分布
+            </h2>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center p-3 bg-pixel-bg border-2 border-pixel-border">
+                <span class="font-pixel text-sm">🌅 早餐</span>
+                <span class="font-pixel text-sm text-pixel-accent">350 kcal</span>
+              </div>
+              <div class="flex justify-between items-center p-3 bg-pixel-bg border-2 border-pixel-border">
+                <span class="font-pixel text-sm">☀️ 午餐</span>
+                <span class="font-pixel text-sm text-pixel-accent">520 kcal</span>
+              </div>
+              <div class="flex justify-between items-center p-3 bg-pixel-bg border-2 border-pixel-border">
+                <span class="font-pixel text-sm">🌙 晚餐</span>
+                <span class="font-pixel text-sm text-pixel-accent">330 kcal</span>
+              </div>
+              <div class="flex justify-between items-center p-3 bg-pixel-bg border-2 border-pixel-border">
+                <span class="font-pixel text-sm">🍎 加餐</span>
+                <span class="font-pixel text-sm text-pixel-accent">0 kcal</span>
+              </div>
+            </div>
+          </PixelCard>
+        </div>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

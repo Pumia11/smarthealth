@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PixelCard from '../../components/PixelCard.astro';
+import AIAnalyzer from '../../components/AIAnalyzer';
+---
+
+<BaseLayout title="AI健康分析 | SmartHealth">
+  <main class="flex-1 p-6">
+    <div class="max-w-7xl mx-auto">
+      <header class="mb-8">
+        <h1 class="text-3xl font-pixel text-pixel-accent mb-2">
+          AI 健康分析
+        </h1>
+        <p class="font-pixel text-pixel-muted">
+          基于AI大模型的智能健康分析
+        </p>
+      </header>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2">
+          <PixelCard class="p-6">
+            <h2 class="font-pixel text-xl text-pixel-accent mb-6">
+              智能分析报告
+            </h2>
+            <AIAnalyzer client:load />
+          </PixelCard>
+        </div>
+
+        <div class="space-y-6">
+          <PixelCard class="p-6">
+            <h2 class="font-pixel text-lg text-pixel-accent mb-4">
+              分析周期
+            </h2>
+            <div class="space-y-2">
+              <button class="w-full p-3 bg-pixel-primary border-2 border-pixel-border text-pixel-text font-pixel text-sm hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-pixel transition-all">
+                近 7 天
+              </button>
+              <button class="w-full p-3 bg-pixel-bg border-2 border-pixel-border text-pixel-text font-pixel text-sm hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-pixel transition-all">
+                近 14 天
+              </button>
+              <button class="w-full p-3 bg-pixel-bg border-2 border-pixel-border text-pixel-text font-pixel text-sm hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-pixel transition-all">
+                近 30 天
+              </button>
+            </div>
+          </PixelCard>
+
+          <PixelCard class="p-6">
+            <h2 class="font-pixel text-lg text-pixel-accent mb-4">
+              历史报告
+            </h2>
+            <div class="space-y-3">
+              <div class="p-3 bg-pixel-bg border-2 border-pixel-border cursor-pointer hover:border-pixel-accent transition-colors">
+                <div class="flex justify-between items-center">
+                  <span class="font-pixel text-sm">2024-01-15</span>
+                  <span class="font-pixel text-sm text-pixel-accent">85分</span>
+                </div>
+              </div>
+              <div class="p-3 bg-pixel-bg border-2 border-pixel-border cursor-pointer hover:border-pixel-accent transition-colors">
+                <div class="flex justify-between items-center">
+                  <span class="font-pixel text-sm">2024-01-08</span>
+                  <span class="font-pixel text-sm text-pixel-accent">82分</span>
+                </div>
+              </div>
+              <div class="p-3 bg-pixel-bg border-2 border-pixel-border cursor-pointer hover:border-pixel-accent transition-colors">
+                <div class="flex justify-between items-center">
+                  <span class="font-pixel text-sm">2024-01-01</span>
+                  <span class="font-pixel text-sm text-pixel-accent">78分</span>
+                </div>
+              </div>
+            </div>
+          </PixelCard>
+
+          <PixelCard class="p-6">
+            <h2 class="font-pixel text-lg text-pixel-accent mb-4">
+              AI 模型
+            </h2>
+            <div class="flex items-center gap-3 p-3 bg-pixel-bg border-2 border-pixel-border">
+              <div class="text-2xl">🤖</div>
+              <div>
+                <div class="font-pixel text-sm">DeepSeek</div>
+                <div class="font-pixel text-xs text-pixel-muted">智能健康分析引擎</div>
+              </div>
+            </div>
+          </PixelCard>
+        </div>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

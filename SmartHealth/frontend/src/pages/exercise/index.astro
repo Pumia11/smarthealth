@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PixelCard from '../../components/PixelCard.astro';
+import ExerciseRecords from '../../components/ExerciseRecords';
+---
+
+<BaseLayout title="运动管理 | SmartHealth">
+  <main class="flex-1 p-6">
+    <div class="max-w-7xl mx-auto">
+      <header class="mb-8">
+        <h1 class="text-3xl font-pixel text-pixel-accent mb-2">
+          运动管理
+        </h1>
+        <p class="font-pixel text-pixel-muted">
+          记录运动数据，追踪健身进度
+        </p>
+      </header>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2">
+          <PixelCard class="p-6">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="font-pixel text-xl text-pixel-accent">
+                运动记录
+              </h2>
+              <button class="pixel-btn">
+                + 添加记录
+              </button>
+            </div>
+            <ExerciseRecords client:load />
+          </PixelCard>
+        </div>
+
+        <div class="space-y-6">
+          <PixelCard class="p-6">
+            <h2 class="font-pixel text-lg text-pixel-accent mb-4">
+              今日统计
+            </h2>
+            <div class="space-y-4">
+              <div class="text-center p-4 bg-pixel-bg border-2 border-pixel-border">
+                <div class="text-4xl mb-2">🔥</div>
+                <div class="font-pixel text-2xl text-pixel-accent">350</div>
+                <div class="font-pixel text-sm text-pixel-muted">消耗热量 (kcal)</div>
+              </div>
+              <div class="text-center p-4 bg-pixel-bg border-2 border-pixel-border">
+                <div class="text-4xl mb-2">⏱️</div>
+                <div class="font-pixel text-2xl text-pixel-accent">45</div>
+                <div class="font-pixel text-sm text-pixel-muted">运动时长 (分钟)</div>
+              </div>
+              <div class="text-center p-4 bg-pixel-bg border-2 border-pixel-border">
+                <div class="text-4xl mb-2">🏃</div>
+                <div class="font-pixel text-2xl text-pixel-accent">3</div>
+                <div class="font-pixel text-sm text-pixel-muted">运动项目</div>
+              </div>
+            </div>
+          </PixelCard>
+
+          <PixelCard class="p-6">
+            <h2 class="font-pixel text-lg text-pixel-accent mb-4">
+              运动类型
+            </h2>
+            <div class="space-y-2">
+              <div class="p-3 bg-pixel-bg border-2 border-pixel-border cursor-pointer hover:border-pixel-accent transition-colors">
+                <span class="text-xl mr-2">🏃</span>
+                <span class="font-pixel text-sm">有氧运动</span>
+              </div>
+              <div class="p-3 bg-pixel-bg border-2 border-pixel-border cursor-pointer hover:border-pixel-accent transition-colors">
+                <span class="text-xl mr-2">💪</span>
+                <span class="font-pixel text-sm">无氧运动</span>
+              </div>
+              <div class="p-3 bg-pixel-bg border-2 border-pixel-border cursor-pointer hover:border-pixel-accent transition-colors">
+                <span class="text-xl mr-2">🧘</span>
+                <span class="font-pixel text-sm">柔韧性训练</span>
+              </div>
+              <div class="p-3 bg-pixel-bg border-2 border-pixel-border cursor-pointer hover:border-pixel-accent transition-colors">
+                <span class="text-xl mr-2">⚽</span>
+                <span class="font-pixel text-sm">竞技运动</span>
+              </div>
+            </div>
+          </PixelCard>
+        </div>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

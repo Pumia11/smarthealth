@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PixelCard from '../components/PixelCard.astro';
+import RegisterForm from '../components/RegisterForm';
+---
+
+<BaseLayout title="注册 | SmartHealth">
+  <main class="flex-1 flex items-center justify-center p-6">
+    <div class="w-full max-w-md">
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-pixel text-pixel-accent mb-4">
+          SmartHealth
+        </h1>
+        <p class="font-pixel text-pixel-muted">
+          创建您的健康账号
+        </p>
+      </div>
+
+      <PixelCard class="p-8">
+        <h2 class="font-pixel text-xl text-pixel-accent mb-6 text-center">
+          注册新账号
+        </h2>
+        
+        <RegisterForm client:load />
+
+        <div class="mt-6 text-center">
+          <p class="font-pixel text-sm text-pixel-muted">
+            已有账号？
+            <a href="/login" class="text-pixel-accent hover:underline">
+              立即登录
+            </a>
+          </p>
+        </div>
+      </PixelCard>
+    </div>
+  </main>
+</BaseLayout>

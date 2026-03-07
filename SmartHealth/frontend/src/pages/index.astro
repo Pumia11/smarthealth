@@ -1,0 +1,114 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PixelCard from '../components/PixelCard.astro';
+import PixelButton from '../components/PixelButton.astro';
+import HealthDashboard from '../components/HealthDashboard';
+---
+
+<BaseLayout title="首页 | SmartHealth">
+  <main class="flex-1 p-6">
+    <div class="max-w-7xl mx-auto">
+      <header class="mb-8">
+        <h1 class="text-3xl font-pixel text-pixel-accent mb-2">
+          SmartHealth
+        </h1>
+        <p class="font-pixel text-pixel-muted">
+          个人健康管理系统 - Pixel Art Edition
+        </p>
+      </header>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2">
+          <PixelCard class="p-6">
+            <h2 class="font-pixel text-xl text-pixel-accent mb-4">
+              健康概览
+            </h2>
+            <HealthDashboard client:load />
+          </PixelCard>
+        </div>
+
+        <div class="space-y-6">
+          <PixelCard class="p-6">
+            <h2 class="font-pixel text-lg text-pixel-accent mb-4">
+              快捷操作
+            </h2>
+            <div class="space-y-3">
+              <PixelButton variant="primary" class="w-full">
+                记录健康指标
+              </PixelButton>
+              <PixelButton variant="accent" class="w-full">
+                添加饮食记录
+              </PixelButton>
+              <PixelButton variant="success" class="w-full">
+                记录运动数据
+              </PixelButton>
+              <PixelButton variant="secondary" class="w-full">
+                AI 健康分析
+              </PixelButton>
+            </div>
+          </PixelCard>
+
+          <PixelCard class="p-6">
+            <h2 class="font-pixel text-lg text-pixel-accent mb-4">
+              今日目标
+            </h2>
+            <div class="space-y-4">
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="font-pixel text-sm">热量摄入</span>
+                  <span class="font-pixel text-sm text-pixel-accent">1200/2000</span>
+                </div>
+                <div class="pixel-progress">
+                  <div class="pixel-progress-bar" style="width: 60%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="font-pixel text-sm">运动消耗</span>
+                  <span class="font-pixel text-sm text-pixel-success">350/500</span>
+                </div>
+                <div class="pixel-progress">
+                  <div class="pixel-progress-bar bg-pixel-success" style="width: 70%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="font-pixel text-sm">饮水量</span>
+                  <span class="font-pixel text-sm text-pixel-warning">4/8 杯</span>
+                </div>
+                <div class="pixel-progress">
+                  <div class="pixel-progress-bar bg-pixel-warning" style="width: 50%"></div>
+                </div>
+              </div>
+            </div>
+          </PixelCard>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <PixelCard class="p-6">
+          <h2 class="font-pixel text-xl text-pixel-accent mb-4">
+            健康资讯
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="pixel-card p-4 hover:shadow-pixel-lg transition-shadow cursor-pointer">
+              <div class="text-pixel-muted font-pixel text-xs mb-2">营养饮食</div>
+              <h3 class="font-pixel text-sm mb-2">科学饮食搭配指南</h3>
+              <p class="font-pixel text-xs text-pixel-muted">了解如何科学搭配饮食...</p>
+            </div>
+            <div class="pixel-card p-4 hover:shadow-pixel-lg transition-shadow cursor-pointer">
+              <div class="text-pixel-muted font-pixel text-xs mb-2">运动健身</div>
+              <h3 class="font-pixel text-sm mb-2">有氧运动的健康益处</h3>
+              <p class="font-pixel text-xs text-pixel-muted">探索有氧运动对身体的好处...</p>
+            </div>
+            <div class="pixel-card p-4 hover:shadow-pixel-lg transition-shadow cursor-pointer">
+              <div class="text-pixel-muted font-pixel text-xs mb-2">心理健康</div>
+              <h3 class="font-pixel text-sm mb-2">压力管理技巧</h3>
+              <p class="font-pixel text-xs text-pixel-muted">学习有效的压力管理方法...</p>
+            </div>
+          </div>
+        </PixelCard>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
