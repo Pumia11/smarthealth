@@ -17,13 +17,4 @@ export default defineConfig({
       noExternal: ['lucide-react'],
     },
   },
-  env: {
-    schema: {
-      API_BASE_URL: envField('string', { context: 'client', access: 'public' }),
-    },
-  },
 });
-
-function envField(type: string, options: any) {
-  return { type, ...options };
-}
